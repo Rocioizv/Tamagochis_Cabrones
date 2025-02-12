@@ -3,6 +3,7 @@
     grid-template-columns: repeat(3, 100px); 
     grid-template-rows: repeat(3, 100px);
     gap: 5px; 
+    float: left; /* Alinea el tablero a la izquierda */
 }
 
 .tile {
@@ -23,4 +24,20 @@
 
 .player {
     background-color: black;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right; /* Alinea el contenedor de botones a la derecha */
+    margin-left: 20px; /* Espacio entre el tablero y los botones */
+}
+
+.button-container button {
+    width: 100px; /* Ancho del botón */
+    height: 100px; /* Alto del botón */
+    margin-bottom: 10px; /* Espacio entre los botones */
+    font-size: 16px; /* Tamaño de la fuente */
 }
