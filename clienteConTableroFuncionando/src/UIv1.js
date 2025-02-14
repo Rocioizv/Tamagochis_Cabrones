@@ -1,9 +1,9 @@
 import { UI_BUILDER } from "./Ui.js";
 import { Player } from "./entities/Player.js";
+import { ConnectionHandler } from "./services/ConnectionHandler.js";
 
 export const UIv1 = UI_BUILDER.init();
 
-const player = Player;
 
 UIv1.initUI = () => {
     const base = document.getElementById(UIv1.uiElements.board);
@@ -39,7 +39,7 @@ UIv1.drawBoard = (board) => {
     if (board !== undefined) {
         const base = document.getElementById(UIv1.uiElements.board);
         base.innerHTML = '';
-        
+
         base.style.gridTemplateColumns = `repeat(${board.length}, 100px)`;
         base.style.gridTemplateRows = `repeat(${board.length}, 100px)`;
         board.forEach(element => element.forEach((element) => {
@@ -61,40 +61,79 @@ UIv1.drawBoard = (board) => {
 
 UIv1.drawBoard();
 
-// Función para girar el jugador
+
 UIv1.rotatePlayer = () => {
-    player.direction = (player.direction + 90) % 360;
-    console.log("Nueva dirección del jugador:", player.direction);
-    // Lógica adicional para actualizar la UI si es necesario
-}
 
-// Función para mover el jugador
-UIv1.movePlayer = () => {
-    const board = UIv1.board; // Asumiendo que el tablero está almacenado en UIv1.board
-    const currentPos = player.position; // Asumiendo que la posición del jugador está almacenada en player.position
-    let newPos = { ...currentPos };
+    Player.direction = (Player.direction + 1) % 4;  // Rota la dirección (0->1->2->3->0)
+    console.log("La dirección es: ", Player.direction);
 
-    switch (player.direction) {
-        case 0: // arriba
-            newPos.y -= 1;
-            break;
-        case 90: // derecha
-            newPos.x += 1;
-            break;
-        case 180: // izquierda
-            newPos.y += 1;
-            break;
-        case 270: // abajo
-            newPos.x -= 1;
-            break;
-    }
 
-    // Verificar que la nueva posición esté dentro de los límites del tablero
-    if (newPos.x >= 0 && newPos.x < board.length && newPos.y >= 0 && newPos.y < board[0].length) {
-        player.position = newPos;
-        console.log("Nueva posición del jugador:", player.position);
-         UIv1.drawBoard(board); // Redibujar el tablero con la nueva posición del jugador
-    } else {
-        console.log("Movimiento inválido: el jugador no puede salir del tablero");
-    }
-}
+    ConnectionHandler.updatePlayerDirection(Player.direction);
+    ConnectionHandler.hola();
+    
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Función para girar el jugador
+// UIv1.rotatePlayer = () => {
+//     player.direction = (player.direction + 90) % 360;
+//     console.log("Nueva dirección del jugador:", player.direction);
+
+// }
+
+
+
+
+
+
+
+// // Función para mover el jugador
+// UIv1.movePlayer = () => {
+
+//     switch (player.direction) {
+//         case 0: // arriba
+//             newPos.y -= 1;
+//             break;
+//         case 90: // derecha
+//             newPos.x += 1;
+//             break;
+//         case 180: // izquierda
+//             newPos.y += 1;
+//             break;
+//         case 270: // abajo
+//             newPos.x -= 1;
+//             break;
+//     }
+
+//     // Verificar que la nueva posición esté dentro de los límites del tablero
+//     if (newPos.x >= 0 && newPos.x < board.length && newPos.y >= 0 && newPos.y < board[0].length) {
+//         player.position = newPos;
+//         console.log("Nueva posición del jugador:", player.position);
+//          UIv1.drawBoard(board); // Redibujar el tablero con la nueva posición del jugador
+//     } else {
+//         console.log("Movimiento inválido: el jugador no puede salir del tablero");
+//     }
+// }

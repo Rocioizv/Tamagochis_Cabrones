@@ -48,6 +48,7 @@ export class ServerService {
 
         this.io.on('connection', (socket) => {
             socket.emit("connectionStatus", { status: true });
+            socket.emit("playerId", { id: socket.id });
             GameService.getInstance().addPlayer(GameService.getInstance().buildPlayer(socket));
             
             socket.on("message", (data)=>{
@@ -55,19 +56,25 @@ export class ServerService {
                 if (doType !== undefined) {
                     doType.do(data);
                 }
-            })
+            });
 
             socket.on('disconnect', () => {
                 console.log('Un cliente se ha desconectado:', socket.id);
             });
         });
+
+        this.io.on("updateDirection", (data) => {
+            const { direction } = data;
+            console.log("Dirección actualizada a: ", direction);
+        });
+        
     }
 
     public addPlayerToRoom(player : Socket, room: String) {
         player.join(room.toString());
     }
 
-    public sendMessage(room: String |null ,type: String, content: any) {
+    public sendMessage(room: String | null, type: String, content: any) {
         console.log(content);
         if (this.active && this.io!=null) {
             if (room != null) {

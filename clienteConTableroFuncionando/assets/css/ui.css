@@ -15,14 +15,18 @@
 }
 
 .bush {
+    background-image: url(../img/OIP.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: green;
 }
 
-.floor {
-    background-color: gray;
-}
+
 
 .player {
+    background-image: url(../img/pistol.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: black;
 }
 
@@ -31,13 +35,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    float: right; /* Alinea el contenedor de botones a la derecha */
-    margin-left: 20px; /* Espacio entre el tablero y los botones */
+    float: right; 
+    margin-left: 20px; 
 }
 
 .button-container button {
-    width: 100px; /* Ancho del botón */
-    height: 100px; /* Alto del botón */
-    margin-bottom: 10px; /* Espacio entre los botones */
-    font-size: 16px; /* Tamaño de la fuente */
+    width: 100px;
+    height: 100px; 
+    margin-bottom: 10px; 
+    font-size: 16px; 
 }
