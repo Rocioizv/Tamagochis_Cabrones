@@ -73,7 +73,10 @@ UIv1.rotatePlayer = () => {
     
 };
 
-
+UIv1.movePlayer = () => {
+    console.log("El jugador se está moviendo");
+    ConnectionHandler.movePlayer();
+};
 
 
 

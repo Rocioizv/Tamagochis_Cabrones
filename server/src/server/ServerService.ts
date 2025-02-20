@@ -58,6 +58,11 @@ export class ServerService {
                 }
             });
 
+            socket.on("movePlayer", (data) => {
+                console.log("Movimiento del jugador recibido: ", data);
+                // Aquí puedes manejar la lógica del movimiento del jugador
+            });
+
             socket.on('disconnect', () => {
                 console.log('Un cliente se ha desconectado:', socket.id);
             });
@@ -67,7 +72,6 @@ export class ServerService {
             const { direction } = data;
             console.log("Dirección actualizada a: ", direction);
         });
-        
     }
 
     public addPlayerToRoom(player : Socket, room: String) {
