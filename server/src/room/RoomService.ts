@@ -23,6 +23,7 @@ export class RoomService {
             const genRanHex = (size: Number) => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
             const currentRoom: Room = {
                 name: "room" + genRanHex(128),
+                // name : "room" +  Math.random() * 40,
                 players: [],
                 occupied: false,
                 game: null
@@ -36,8 +37,14 @@ export class RoomService {
     public addPlayer(player: Player) : Room {
         const room : Room = this.getRoom();
         room.players.push(player);
-        ServerService.getInstance().addPlayerToRoom(player.id,room.name);
-        if (room.players.length == RoomConfig.maxRoomPlayers) room.occupied = true;
+        ServerService.getInstance().addPlayerToRoom(player.id, room.name);
+        if (room.players.length == RoomConfig.maxRoomPlayers) { room.occupied = true; console.log("Cantidad de jugadores ", room.players.length, " en la sala ", room.name) };
+        
         return room;  
     }
+
+    public getRoomByPlayer(player: Player): Room | undefined {
+        return this.rooms.find(room => room.players.some(p => p.id.id === player.id.id));
+    }
+    
 }

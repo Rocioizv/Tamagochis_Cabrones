@@ -39,12 +39,12 @@ export const ConnectionHandler = {
             console.log("Esta es la id del jugador:", UIv1.playerId);
         });
     },
-    updatePlayerDirection: (direction) => {
+    updateDirection: (direction) => {
         ConnectionHandler.socket.emit("updateDirection", { direction: direction });
         console.log("pasa la dirección");
     },
     movePlayer: () => {
-        ConnectionHandler.socket.emit("movePlayer", { action: "move" });
+        ConnectionHandler.socket.emit("movePlayer", "puedo avanzar?");
         console.log("El mensaje de movimiento ha sido enviado al servidor");
     },
     hola: () => {

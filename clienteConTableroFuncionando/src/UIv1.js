@@ -64,18 +64,18 @@ UIv1.drawBoard();
 
 UIv1.rotatePlayer = () => {
 
-    Player.direction = (Player.direction + 1) % 4;  // Rota la dirección (0->1->2->3->0)
+    Player.direction = (Player.direction + 1) % 4;  // Rota la dirección (0 -> 1 -> 2-> 3-> 0)
     console.log("La dirección es: ", Player.direction);
 
 
-    ConnectionHandler.updatePlayerDirection(Player.direction);
-    ConnectionHandler.hola();
+    ConnectionHandler.updateDirection(Player.direction);
+    // ConnectionHandler.hola();
     
 };
 
 UIv1.movePlayer = () => {
-    console.log("El jugador se está moviendo");
     ConnectionHandler.movePlayer();
+    console.log("movePlayer en  UIv1");
 };
 
 
