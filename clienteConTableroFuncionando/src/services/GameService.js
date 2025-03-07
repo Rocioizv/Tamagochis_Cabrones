@@ -15,7 +15,8 @@ export class GameService {
 
     #actionsList = {
         "NEW_PLAYER" : this.do_newPlayer.bind(this),
-        "BOARD" : this.do_newBoard.bind(this)
+        "BOARD" : this.do_newBoard.bind(this),
+        "Nueva_direccion": this.do_changeDirection.bind(this)
     };
 
     constructor(ui){
@@ -56,11 +57,25 @@ export class GameService {
 
     async do_newPlayer (payload) {
         console.log("ha llegado un jugador nuevo");
+        
     };
 
     async do_newBoard(payload) {
         this.#board.build(payload);
         this.#ui.drawBoard(this.#board.map);
-    }
+    };
     
+    async do_changeDirection(payload) {
+        console.log("🔄 Dirección cambiada:", payload);
+        const { playerId, direction } = payload;
+    
+        const player = this.#players.find(p => p.id === playerId);
+        if (player) {
+            player.direction = direction;
+            console.log(`✅ Jugador ${playerId} ahora apunta a la dirección ${direction}`);
+            // Aquí podrías redibujar el jugador en la UI
+        } else {
+            console.error(`❌ Jugador no encontrado: ${playerId}`);
+        }
+    }
 }

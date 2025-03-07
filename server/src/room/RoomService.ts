@@ -38,6 +38,7 @@ export class RoomService {
         const room : Room = this.getRoom();
         room.players.push(player);
         ServerService.getInstance().addPlayerToRoom(player.id, room.name);
+        
         if (room.players.length == RoomConfig.maxRoomPlayers) { room.occupied = true; console.log("Cantidad de jugadores ", room.players.length, " en la sala ", room.name) };
         
         return room;  

@@ -12,7 +12,7 @@ export const ConnectionHandler = {
         ConnectionHandler.socket = io(url);
         let { socket } = ConnectionHandler;
         socket.onAny((message, payload) => {
-            console.log("Esta llegando: ");
+            console.log("Esta llegando es este: ");
             console.log(payload);
             console.log(payload.type);
             console.log(payload.content);
@@ -38,10 +38,15 @@ export const ConnectionHandler = {
             UIv1.playerId = data.id;
             console.log("Esta es la id del jugador:", UIv1.playerId);
         });
+       
+        socket.on("directionUpdated", (data) => {
+            UIv1.playerId = data.id;
+            console.log("El servidor devolvió esta dirección", data);
+        });
     },
     updateDirection: (direction) => {
         ConnectionHandler.socket.emit("updateDirection", { direction: direction });
-        console.log("pasa la dirección");
+        console.log("pasa la dirección al servidor");
     },
     movePlayer: () => {
         ConnectionHandler.socket.emit("movePlayer", "puedo avanzar?");

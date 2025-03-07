@@ -84,7 +84,8 @@ export class ServerService {
     
                     // Emitir la actualización de dirección al cliente
                     socket.emit("directionUpdated", { direction: player.direction });
-    
+                    console.log("para comprobar", player.direction, "es la direccion");
+
                     // Opcional: Enviar la actualización de dirección a los demás jugadores
                     const room = RoomService.getInstance().getRoomByPlayer(player);
                     if (room) {
