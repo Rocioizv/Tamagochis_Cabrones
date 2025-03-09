@@ -12,7 +12,7 @@ export const ConnectionHandler = {
         ConnectionHandler.socket = io(url);
         let { socket } = ConnectionHandler;
         socket.onAny((message, payload) => {
-            console.log("Esta llegando es este: ");
+            console.log("Esta llegando: ");
             console.log(payload);
             console.log(payload.type);
             console.log(payload.content);

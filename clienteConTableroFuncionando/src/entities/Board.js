@@ -1,13 +1,15 @@
 export const ELEMENTS = {
-    bush : 5,
-    player : 1
+    bush: 5,
+    player: 1
 };
+
 export class Board {
     #map = null;
+    #players = [];
     #states = {
-        NO_BUILD : 0,
-        BUILD : 1
-    }
+        NO_BUILD: 0,
+        BUILD: 1
+    };
     #state = null;
 
     constructor() {
@@ -15,44 +17,43 @@ export class Board {
     }
 
     build(payload) {
-        // const { size, elements } = payload;
-        // this.#map = new Array(size).fill().map(() => new Array(size).fill(0));
-        // elements.forEach(element=> this.#map[element.x][element.y]= ELEMENTS.bush);
-        // this.#state = this.#states.BUILD;
-
-        if (payload !== undefined) {
-            const { size, elements } = payload;
-
-            this.#map = new Array(size).fill(null).map(() => new Array(size).fill(0));
-
-            // Place bushes in the map
-            elements.forEach(element => this.#map[element.x][element.y] = ELEMENTS.bush);
-
-            // Make the corners available for players
-            const corners = [
-                { x: 0, y: 0 },
-                { x: size - 1, y: 0 },
-                { x: 0, y: size - 1 },
-                { x: size - 1, y: size - 1 }
-            ];
-
-            corners.forEach(corner => {
-                // Ensure the corners are not occupied
-                if (this.#map[corner.x][corner.y] === 0) {
-                    this.#map[corner.x][corner.y] = ELEMENTS.player;
-                }
-            });
-
-            this.#state = this.#states.BUILD;
-        } else {
-            console.log('It is undefined');
+        if (!payload) {
+            console.error("Error: payload inválido");
+            return;
         }
-
+    
+        const { size, elements } = payload;
+    
+        // Asegurar que this.#map sea un array bidimensional
+        this.#map = new Array(size).fill(null).map(() => new Array(size).fill(0));
+    
+        // Colocar arbustos
+        elements.forEach(element => {
+            if (this.#map[element.x] && this.#map[element.x][element.y] !== undefined) {
+                this.#map[element.x][element.y] = ELEMENTS.bush;
+            } else {
+                console.error(`Posición inválida para un arbusto: (${element.x}, ${element.y})`);
+            }
+        });
+    
+        this.#state = this.#states.BUILD;
     }
+    
+    addPlayer(x, y) {
+        if (!this.#map || !this.#map[x] || this.#map[x][y] === undefined) {
+            console.error("Error: no se puede agregar jugador en posición inválida", x, y);
+            return;
+        }
+    
+        this.#map[x][y] = ELEMENTS.player;
+    }
+    
 
     get map() {
-        if (this.#state === this.#states.BUILD) {
-            return this.#map;
-        } return undefined;
+        return this.#state === this.#states.BUILD ? this.#map : undefined;
+    }
+
+    get players() {
+        return this.#players;
     }
 }

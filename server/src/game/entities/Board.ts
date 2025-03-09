@@ -7,4 +7,5 @@ export interface Element {
 export interface Board {
     size: number;
     elements: Array<Element>;
+    // players: Array<Element>;
 }

@@ -1,5 +1,6 @@
 import { Board } from "../entities/Board.js";
 import { Queue } from "../Queue.js";
+import { UIv1 } from "../UIv1.js";
 export class GameService {
     #states = {
         WAITING : 0,
@@ -14,8 +15,8 @@ export class GameService {
     #parallel = null;
 
     #actionsList = {
-        "NEW_PLAYER" : this.do_newPlayer.bind(this),
         "BOARD" : this.do_newBoard.bind(this),
+        "NEW_PLAYER" : this.do_newPlayer.bind(this),
         "Nueva_direccion": this.do_changeDirection.bind(this)
     };
 
@@ -25,7 +26,7 @@ export class GameService {
         this.#queue = new Queue();
         this.#parallel = null;
         this.checkScheduler();
-        this.#ui = ui;
+        this.#ui = UIv1;
     }
 
     checkScheduler() {
@@ -55,27 +56,37 @@ export class GameService {
         this.checkScheduler();
     };
 
-    async do_newPlayer (payload) {
-        console.log("ha llegado un jugador nuevo");
-        
-    };
-
     async do_newBoard(payload) {
         this.#board.build(payload);
         this.#ui.drawBoard(this.#board.map);
+
+        this.#ui.drawPlayers(this.#players);
     };
+
+   async do_newPlayer(payload) {
+    if (!this.#board.map) {
+        console.error("Error: el tablero aún no está construido");
+        return;
+    }
+
+    console.log("Nuevo jugador conectado en:", payload.x, payload.y);
+    this.#board.addPlayer(payload.x, payload.y);
+    this.#ui.drawPlayers(this.#board.players);
+}
+
+    
     
     async do_changeDirection(payload) {
-        console.log("🔄 Dirección cambiada:", payload);
+        console.log("Dirección cambiada:", payload);
         const { playerId, direction } = payload;
     
         const player = this.#players.find(p => p.id === playerId);
         if (player) {
             player.direction = direction;
-            console.log(`✅ Jugador ${playerId} ahora apunta a la dirección ${direction}`);
-            // Aquí podrías redibujar el jugador en la UI
+            console.log(` Jugador ${playerId} apunta a la dirección ${direction}`);
+    
         } else {
-            console.error(`❌ Jugador no encontrado: ${playerId}`);
+            console.error(`Jugador no encontrado: ${playerId}`);
         }
     }
 }

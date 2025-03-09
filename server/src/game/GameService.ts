@@ -63,7 +63,7 @@ export class GameService {
 
 
     public getPlayerBySocket(socket: Socket): Player | undefined {
-        // Busco entre las salas el jugador con el socker 
+       
         for (const game of this.games) {
             for (const player of game.room.players) {
                 if (player.id.id === socket.id) {
@@ -74,7 +74,5 @@ export class GameService {
         return undefined;
     }
     
-
-
 
 }
